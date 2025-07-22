@@ -1,5 +1,5 @@
 import MovieCard from "../components/MovieCard";
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { searchMovies, getPopularMovies } from "../services/api";
 import "../css/Home.css";
 
@@ -41,11 +41,19 @@ function Home() {
                 />
                 <button type="submit" className="search-button">Search</button>
             </form>
-            <div className="movies-grid">
-                {movies.map(movie => (
-                    movie.title.toLowerCase().startsWith(searchQuery) && <MovieCard movie={movie} key={movie.id} />
-                ))}
-            </div>
+
+            {/* dispaly error messages if any */}
+            {error && <div className="error-message">{error}</div>}
+
+            {/* display movies if the list is loaded */}
+            {loading ? (<div className="loading">Loading...</div>) : (
+                <div className="movies-grid">
+                    {movies.map(movie => (
+                        movie.title.toLowerCase().startsWith(searchQuery) && <MovieCard movie={movie} key={movie.id} />
+                    ))}
+                </div>
+            )}
+
         </div>
     );
 }
